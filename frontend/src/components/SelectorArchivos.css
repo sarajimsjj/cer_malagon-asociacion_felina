@@ -1,0 +1,66 @@
+.selector-archivos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 32px 16px;
+  border: 2px dashed var(--color-line);
+  border-radius: 12px;
+  background: var(--color-bg);
+  color: var(--color-ink-soft);
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.selector-archivos:hover {
+  border-color: var(--color-amber);
+  background: var(--color-surface);
+  color: var(--color-ink);
+}
+
+.selector-archivos__icono {
+  font-size: 24px;
+  line-height: 1;
+  color: var(--color-ink);
+}
+
+.selector-archivos__texto {
+  max-width: 320px;
+}
+
+.selector-archivos--compacto {
+  flex-direction: row;
+  gap: 6px;
+  padding: 10px 18px;
+  width: fit-content;
+  border-radius: 8px;
+  border: 1px solid var(--color-line);
+  background: var(--color-line);
+  color: var(--color-ink);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.selector-archivos--compacto:hover {
+  border-color: #c5cdc7;
+  background: #c5cdc7;
+  color: var(--color-ink);
+}
+
+.selector-archivos--compacto .selector-archivos__icono {
+  font-size: 14px;
+  color: inherit;
+}
+
+.selector-archivos--compacto .selector-archivos__texto {
+  max-width: none;
+}
+
+.selector-archivos--disabled {
+  opacity: 0.6;
+  cursor: default;
+  pointer-events: none;
+}

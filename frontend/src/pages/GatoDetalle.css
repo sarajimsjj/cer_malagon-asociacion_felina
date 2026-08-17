@@ -1,0 +1,158 @@
+.gato-detalle__volver {
+  display: inline-block;
+  margin-bottom: 24px;
+  font-size: 14px;
+  text-decoration: none;
+  color: var(--color-ink-soft);
+}
+
+.gato-detalle__volver:hover {
+  color: var(--color-ink);
+}
+
+.gato-detalle__cabecera {
+  margin-bottom: 32px;
+}
+
+.gato-detalle__cabecera-fila {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.gato-detalle__nombre {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.gato-detalle__meta {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-ink-soft);
+}
+
+.gato-detalle__estados {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.gato-detalle__estados-etiqueta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-ink-soft);
+  margin-right: 2px;
+}
+
+.gato-detalle__boton-estado {
+  font-family: var(--font-body);
+  font-size: 13px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: var(--color-bg);
+  cursor: pointer;
+}
+
+.gato-detalle__boton-estado:hover:not(:disabled) {
+  border-color: currentColor;
+}
+
+.gato-detalle__boton-estado:disabled {
+  cursor: default;
+}
+
+.gato-detalle__boton-estado--activo {
+  font-weight: 600;
+  border-color: currentColor;
+}
+
+.gato-detalle__boton-estado--urgente {
+  color: var(--color-urgente);
+}
+.gato-detalle__boton-estado--urgente.gato-detalle__boton-estado--activo {
+  background: var(--color-urgente-bg);
+}
+
+.gato-detalle__boton-estado--disponible {
+  color: var(--color-disponible);
+}
+.gato-detalle__boton-estado--disponible.gato-detalle__boton-estado--activo {
+  background: var(--color-disponible-bg);
+}
+
+.gato-detalle__boton-estado--reservado {
+  color: var(--color-reservado);
+}
+.gato-detalle__boton-estado--reservado.gato-detalle__boton-estado--activo {
+  background: var(--color-reservado-bg);
+}
+
+.gato-detalle__boton-estado--adoptado {
+  color: var(--color-adoptado);
+}
+.gato-detalle__boton-estado--adoptado.gato-detalle__boton-estado--activo {
+  background: var(--color-adoptado-bg);
+}
+
+.gato-detalle__boton-estado--enfermedad {
+  color: var(--color-enfermedad);
+}
+.gato-detalle__boton-estado--enfermedad.gato-detalle__boton-estado--activo {
+  background: var(--color-enfermedad-bg);
+}
+
+.gato-detalle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    'galeria info'
+    'ancho ancho';
+  gap: 32px;
+  align-items: start;
+}
+
+.gato-detalle__galeria {
+  grid-area: galeria;
+}
+
+.gato-detalle__info {
+  grid-area: info;
+}
+
+.gato-detalle__ancho-completo {
+  grid-area: ancho;
+}
+
+.gato-detalle__seccion {
+  margin-bottom: 40px;
+}
+
+.gato-detalle__seccion:last-child {
+  margin-bottom: 0;
+}
+
+.gato-detalle__subtitulo {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0 0 16px;
+}
+
+@media (max-width: 760px) {
+  .gato-detalle {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'galeria'
+      'info'
+      'ancho';
+  }
+}

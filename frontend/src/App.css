@@ -1,0 +1,106 @@
+.pagina {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 56px 24px 80px;
+}
+
+.cabecera {
+  margin-bottom: 44px;
+}
+
+.cabecera__fila {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.cabecera__titulo {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 600;
+  margin: 0 0 10px;
+  letter-spacing: -0.01em;
+}
+
+.cabecera__leyenda-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 4px 0 16px;
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-ink-soft);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.cabecera__leyenda-toggle:hover {
+  color: var(--color-ink);
+}
+
+.cabecera__leyenda-circulo {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.cabecera__leyenda-circulo--urgente {
+  background-color: var(--color-urgente-bg);
+  border: 2px solid var(--color-urgente)
+}
+
+.cabecera__leyenda-circulo--disponible {
+  background-color: var(--color-disponible-bg); 
+  border: 2px solid var(--color-disponible)
+}
+
+.cabecera__leyenda-circulo--reservado {
+  background-color: var(--color-reservado-bg);
+  border: 2px solid var(--color-reservado)
+}
+
+.cabecera__leyenda-circulo--tratamiento {
+  background-color: var(--color-enfermedad-bg);
+  border: 2px solid var(--color-enfermedad)
+}
+
+.cabecera__leyenda-circulo--adoptado {
+  background-color: var(--color-adoptado-bg);
+  border: 2px solid var(--color-adoptado)
+}
+
+.grid-gatos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 28px 22px;
+}
+
+.gato-card-enlace {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.mensaje-estado {
+  font-size: 15px;
+  color: var(--color-ink-soft);
+  padding: 32px 0;
+}
+
+.mensaje-estado--error {
+  color: var(--color-enfermedad);
+}
+
+@media (max-width: 480px) {
+  .pagina {
+    padding: 36px 16px 60px;
+  }
+}
+

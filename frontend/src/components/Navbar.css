@@ -1,0 +1,183 @@
+.navbar {
+  border-bottom: 1px solid var(--color-line);
+  background: var(--color-navbar);
+}
+
+.navbar__contenido {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.navbar__derecha {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.navbar__marca {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--color-ink);
+}
+
+.navbar__marca-sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-ink-soft);
+  margin-left: 2px;
+}
+
+.navbar__enlaces {
+  display: flex;
+  gap: 28px;
+}
+
+.navbar__enlace {
+  font-size: 14px;
+  text-decoration: none;
+  color: var(--color-ink-soft);
+}
+
+.navbar__enlace:hover {
+  color: var(--color-ink);
+}
+
+.navbar__enlace--activo {
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+.navbar__boton {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* Zona discreta: acceso de administradoras cuando no hay sesión, o
+   identidad + cerrar sesión cuando sí la hay. Deliberadamente más
+   pequeña y apagada que los enlaces públicos para no llamar la atención. */
+.navbar__admin {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-left: 14px;
+  border-left: 1px solid rgba(35, 35, 35, 0.15);
+}
+
+.navbar__admin-enlace {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  color: var(--color-ink-soft);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.navbar__admin-enlace:hover {
+  color: var(--color-ink);
+}
+
+.navbar__admin-enlace--activo {
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+.navbar__usuario {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: 1px solid rgba(35, 35, 35, 0.12);
+  border-radius: 999px;
+  padding: 4px 10px 4px 8px;
+  cursor: default;
+}
+
+.navbar__usuario-punto {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-disponible);
+}
+
+.navbar__hamburguesa {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.navbar__hamburguesa span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--color-ink);
+  border-radius: 2px;
+}
+
+@media (max-width: 720px) {
+  .navbar__hamburguesa {
+    display: flex;
+  }
+
+  .navbar__derecha {
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 16px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(35, 35, 35, 0.15);
+  }
+
+  .navbar__derecha--abierto {
+    display: flex;
+  }
+
+  .navbar__enlaces {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .navbar__admin {
+    border-left: none;
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar__contenido {
+    padding: 16px;
+  }
+}

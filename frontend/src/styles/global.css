@@ -1,0 +1,62 @@
+:root {
+  /* ---- Color ---- */
+  --color-bg: #f9eee7;
+  --color-surface: #ffffff;
+  --color-ink: #232323;
+  --color-ink-soft: #5c625e;
+  --color-line: #d1d5d2;
+  --color-amber: #d9a441;
+  --color-navbar: #fdcdb0;
+
+  --color-disponible: #3f7d5c;
+  --color-disponible-bg: #d5f0e1;
+  --color-reservado: #b1791f;
+  --color-reservado-bg: #f4ead4;
+  --color-adoptado: #676470;
+  --color-adoptado-bg: #d8d4ce;
+  --color-enfermedad: #bc6c11;
+  --color-enfermedad-bg: #f9e0cd;
+  --color-urgente: #c23b3b;
+  --color-urgente-bg: #f7dcdc;
+  --color-cuidados: #526b8f;
+  --color-cuidados-bg: #e4ebf3;
+
+  --color-sanitario-postivo-bg: #f5d1d1;
+  --color-sanitario-negativo-bg: #d1f5db;
+  --color-sanitario-no-realizado-bg: #ebeaea;
+
+  /* ---- Tipografía ---- */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-amber);
+  outline-offset: 2px;
+}
