@@ -1,5 +1,7 @@
 # 🐱 CER Malagón — Feline Adoption Platform
 
+https://cer-malagon-asociacion.netlify.app/
+
 A full-stack web application developed for **CER Malagón**, a feline association, to simplify the management of cats in their care and facilitate the adoption process.
 
 The platform provides administrators with tools to manage cat profiles, health information, photos/videos and adoption status, while offering potential adopters a clear and user-friendly way to browse cats and submit adoption requests.
@@ -37,7 +39,15 @@ The platform provides administrators with tools to manage cat profiles, health i
 
 ### Storage
 
-* Local file storage for photos and videos, abstracted behind a single component so it can be swapped for a cloud provider (e.g. Amazon S3) without touching the rest of the application — see [Roadmap](#-roadmap)
+* Amazon S3 for photo and video storage, accessed through the official AWS SDK for Java
+* Storage logic isolated behind a single component, so the provider could be swapped later without touching the rest of the application
+
+### Deployment
+
+* **Netlify** — frontend, auto-deployed from the `main` branch on every push
+* **Render** — backend, built and run from a multi-stage Dockerfile
+* **Neon** — managed PostgreSQL database
+* Environment-based configuration throughout (database URL, JWT secret, AWS credentials, allowed CORS origins), so the same codebase runs locally and in production without changes
 
 ### Tools
 
@@ -45,6 +55,7 @@ The platform provides administrators with tools to manage cat profiles, health i
 * IntelliJ IDEA
 * Visual Studio Code
 * Maven
+* Docker
 
 ### AI-Assisted Development
 
@@ -65,6 +76,7 @@ The project also serves as an opportunity to apply full-stack development practi
 * Authentication and role-based authorization
 * Relational database design
 * File storage design that stays decoupled from the storage provider
+* Deploying a multi-service architecture (separate hosts for frontend, backend, database and file storage) with environment-based configuration
 * Responsive UI development
 * Component-based frontend architecture
 * Maintainable and scalable code
@@ -88,10 +100,12 @@ The application follows a separated frontend/backend architecture:
       |           |
       v           v
 +-----------+  +---------------+
-| PostgreSQL|  |  Local file   |
-|  Database |  |    storage    |
+| PostgreSQL|  |   Amazon S3   |
+|  Database |  | (photos/video)|
 +-----------+  +---------------+
 ```
+
+In production, the React frontend is hosted on Netlify, the Spring Boot backend runs as a Docker container on Render, the database is a managed PostgreSQL instance on Neon, and media files live in an Amazon S3 bucket. Each piece is configured entirely through environment variables, so the same codebase runs locally and in production unchanged.
 
 ## 🔐 Security
 
@@ -99,7 +113,7 @@ Authentication and authorization are handled on the backend using Spring Securit
 
 Two administrator roles determine which actions are available: the **principal** administrator can add or edit cats, manage their photos/videos, and invite new administrators, while **standard** administrators can only view and manage adoption requests. All role checks are enforced on the backend, not just hidden in the interface.
 
-Sensitive configuration such as database credentials and the JWT signing secret is handled through environment variables rather than being stored directly in the source code.
+Sensitive configuration — database credentials, the JWT signing secret, and AWS credentials — is handled through environment variables rather than being stored directly in the source code. AWS credentials in particular are read by the AWS SDK straight from the environment; they never pass through application code or get logged.
 
 ## 📸 Image & Video Management
 
@@ -107,7 +121,9 @@ Each cat can have multiple photos and videos, with one photo designated as the m
 
 The main photo is used throughout the application as the cat's primary representation, both in the cat listing and as the cover image on its profile.
 
-Media files are currently stored on the server's local disk. The storage logic lives behind a single component, so migrating to a cloud provider later only requires changing that one piece — the rest of the application only ever deals with a URL.
+Media files are stored in a dedicated Amazon S3 bucket, uploaded and deleted through a single component so the rest of the application only ever deals with a URL — never with where the file actually lives.
+
+The bucket is configured so anyone can *read* an object (needed for a public adoption site), but only the backend can *write* to it: uploading and deleting require the credentials of a dedicated IAM user, scoped to just `PutObject`/`DeleteObject` on that one bucket, which only the backend holds. On top of that, the backend itself only allows the principal administrator to trigger an upload or deletion in the first place.
 
 ## 🎨 UX/UI
 
@@ -131,6 +147,6 @@ Some of the main technical challenges addressed in the project include:
 
 ## 📌 Project Status
 
-🚧 **In development**
+🚀 **Deployed** — frontend on Netlify, backend on Render, database on Neon, media storage on Amazon S3.
 
-This project is actively being developed and new features and improvements are being added progressively.
+The project is live and still actively developed, with new features and improvements added progressively.
