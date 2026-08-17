@@ -5,23 +5,23 @@ import com.cermalagon.backend.exception.TipoArchivoNoPermitidoException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.Map;
 import java.util.UUID;
 
 /**
- * Guarda las fotos y vídeos de los gatos en disco local (gratis, sin depender de ningún
- * proveedor externo). El nombre del archivo se genera siempre en el servidor (UUID +
- * extensión derivada del content-type real), nunca a partir del nombre que envía el
- * navegador, para no depender de datos de entrada al construir una ruta de archivo.
+ * Guarda las fotos y vídeos de los gatos en un bucket de Amazon S3. Las credenciales
+ * (AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY) las coge el SDK directamente de las
+ * variables de entorno estándar de AWS; esta clase nunca las lee ni las ve.
  *
- * Si en el futuro se quiere migrar a S3 (o cualquier otro proveedor), basta con
- * sustituir esta clase por una que suba a ese proveedor y devuelva su URL: el resto
- * de la aplicación solo conoce la URL guardada en BD, no de dónde viene.
+ * Si en el futuro se quiere migrar a otro proveedor, basta con sustituir esta clase:
+ * el resto de la aplicación solo conoce la URL guardada en BD, no de dónde viene.
  */
 @Component
 public class AlmacenadorArchivos {
@@ -40,15 +40,17 @@ public class AlmacenadorArchivos {
     public record ArchivoGuardado(String url, TipoMedia tipo) {
     }
 
-    private final Path directorioBase;
+    private final S3Client s3Client;
+    private final String bucket;
+    private final String urlBase;
 
-    public AlmacenadorArchivos(@Value("${app.uploads.dir}") String directorioConfigurado) {
-        this.directorioBase = Path.of(directorioConfigurado).toAbsolutePath().normalize();
-        try {
-            Files.createDirectories(directorioBase);
-        } catch (IOException e) {
-            throw new IllegalStateException("No se ha podido crear el directorio de subidas: " + directorioBase, e);
-        }
+    public AlmacenadorArchivos(
+            @Value("${app.aws.s3.bucket}") String bucket,
+            @Value("${app.aws.s3.region}") String region
+    ) {
+        this.bucket = bucket;
+        this.s3Client = S3Client.builder().region(Region.of(region)).build();
+        this.urlBase = "https://" + bucket + ".s3." + region + ".amazonaws.com/";
     }
 
     public ArchivoGuardado guardar(MultipartFile archivo) {
@@ -59,29 +61,33 @@ public class AlmacenadorArchivos {
         }
 
         String nombreArchivo = UUID.randomUUID() + tipoPermitido.extension();
-        Path destino = directorioBase.resolve(nombreArchivo);
 
         try {
-            Files.copy(archivo.getInputStream(), destino, StandardCopyOption.REPLACE_EXISTING);
+            s3Client.putObject(
+                    PutObjectRequest.builder()
+                            .bucket(bucket)
+                            .key(nombreArchivo)
+                            .contentType(archivo.getContentType())
+                            .build(),
+                    RequestBody.fromInputStream(archivo.getInputStream(), archivo.getSize())
+            );
         } catch (IOException e) {
-            throw new IllegalStateException("No se ha podido guardar el archivo", e);
+            throw new IllegalStateException("No se ha podido guardar el archivo en S3", e);
         }
 
-        return new ArchivoGuardado("/uploads/" + nombreArchivo, tipoPermitido.tipo());
+        return new ArchivoGuardado(urlBase + nombreArchivo, tipoPermitido.tipo());
     }
 
     public void eliminar(String url) {
         String nombreArchivo = url.substring(url.lastIndexOf('/') + 1);
-        Path archivo = directorioBase.resolve(nombreArchivo).normalize();
-
-        if (!archivo.getParent().equals(directorioBase)) {
-            return; // nunca borrar fuera del directorio de subidas
-        }
 
         try {
-            Files.deleteIfExists(archivo);
-        } catch (IOException e) {
-            // no bloqueamos el borrado del registro en BD por un fallo al borrar el archivo físico
+            s3Client.deleteObject(DeleteObjectRequest.builder()
+                    .bucket(bucket)
+                    .key(nombreArchivo)
+                    .build());
+        } catch (Exception e) {
+            // no bloqueamos el borrado del registro en BD por un fallo al borrar en S3
         }
     }
 }

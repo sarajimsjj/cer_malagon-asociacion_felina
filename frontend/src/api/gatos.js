@@ -1,7 +1,8 @@
 import { obtenerToken } from './auth'
+import { API_BASE_URL } from './config'
 
 export async function obtenerGatos() {
-  const respuesta = await fetch('/api/gatos')
+  const respuesta = await fetch(`${API_BASE_URL}/api/gatos`)
 
   if (!respuesta.ok) {
     throw new Error(`Error al cargar los gatos (${respuesta.status})`)
@@ -11,7 +12,7 @@ export async function obtenerGatos() {
 }
 
 export async function obtenerGato(id) {
-  const respuesta = await fetch(`/api/gatos/${id}`)
+  const respuesta = await fetch(`${API_BASE_URL}/api/gatos/${id}`)
 
   if (!respuesta.ok) {
     if (respuesta.status === 404) {
@@ -24,7 +25,7 @@ export async function obtenerGato(id) {
 }
 
 export async function actualizarGato(id, datos) {
-  const respuesta = await fetch(`/api/gatos/${id}`, {
+  const respuesta = await fetch(`${API_BASE_URL}/api/gatos/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -49,7 +50,7 @@ export async function actualizarGato(id, datos) {
 }
 
 export async function crearGato(datos){
-  const respuesta = await fetch('/api/gatos', {
+  const respuesta = await fetch(`${API_BASE_URL}/api/gatos`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

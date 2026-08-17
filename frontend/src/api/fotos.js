@@ -1,7 +1,8 @@
 import { obtenerToken } from './auth'
+import { API_BASE_URL } from './config'
 
 export async function obtenerFotos(gatoId) {
-  const respuesta = await fetch(`/api/gatos/${gatoId}/fotos`)
+  const respuesta = await fetch(`${API_BASE_URL}/api/gatos/${gatoId}/fotos`)
   if (!respuesta.ok) {
     throw new Error(`Error al cargar las fotos (${respuesta.status})`)
   }
@@ -12,7 +13,7 @@ export async function subirFoto(gatoId, archivo) {
   const formData = new FormData()
   formData.append('archivo', archivo)
 
-  const respuesta = await fetch(`/api/gatos/${gatoId}/fotos`, {
+  const respuesta = await fetch(`${API_BASE_URL}/api/gatos/${gatoId}/fotos`, {
     method: 'POST',
     headers: { Authorization: `Bearer ${obtenerToken()}` },
     body: formData,
@@ -28,7 +29,7 @@ export async function subirFoto(gatoId, archivo) {
 }
 
 export async function marcarFotoPrincipal(gatoId, fotoId) {
-  const respuesta = await fetch(`/api/gatos/${gatoId}/fotos/${fotoId}/principal`, {
+  const respuesta = await fetch(`${API_BASE_URL}/api/gatos/${gatoId}/fotos/${fotoId}/principal`, {
     method: 'PATCH',
     headers: { Authorization: `Bearer ${obtenerToken()}` },
   })
@@ -39,7 +40,7 @@ export async function marcarFotoPrincipal(gatoId, fotoId) {
 }
 
 export async function eliminarFoto(gatoId, fotoId) {
-  const respuesta = await fetch(`/api/gatos/${gatoId}/fotos/${fotoId}`, {
+  const respuesta = await fetch(`${API_BASE_URL}/api/gatos/${gatoId}/fotos/${fotoId}`, {
     method: 'DELETE',
     headers: { Authorization: `Bearer ${obtenerToken()}` },
   })

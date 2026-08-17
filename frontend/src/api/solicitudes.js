@@ -1,8 +1,9 @@
 import { obtenerToken } from './auth'
 import { ErrorValidacion } from './gatos'
+import { API_BASE_URL } from './config'
 
 export async function crearSolicitud(gatoId, datos) {
-  const respuesta = await fetch(`/api/gatos/${gatoId}/solicitudes`, {
+  const respuesta = await fetch(`${API_BASE_URL}/api/gatos/${gatoId}/solicitudes`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(datos),
@@ -18,7 +19,7 @@ export async function crearSolicitud(gatoId, datos) {
 }
 
 export async function obtenerSolicitudes(gatoId) {
-  const respuesta = await fetch(`/api/gatos/${gatoId}/solicitudes`, {
+  const respuesta = await fetch(`${API_BASE_URL}/api/gatos/${gatoId}/solicitudes`, {
     headers: { Authorization: `Bearer ${obtenerToken()}` },
   })
   if (!respuesta.ok) {
@@ -31,7 +32,7 @@ export async function obtenerSolicitudes(gatoId) {
 }
 
 export async function cambiarEstadoSolicitud(gatoId, solicitudId, estado) {
-  const respuesta = await fetch(`/api/gatos/${gatoId}/solicitudes/${solicitudId}/estado`, {
+  const respuesta = await fetch(`${API_BASE_URL}/api/gatos/${gatoId}/solicitudes/${solicitudId}/estado`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',

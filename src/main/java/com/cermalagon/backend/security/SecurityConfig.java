@@ -33,8 +33,7 @@ public class SecurityConfig {
                 .cors(cors -> {})
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // Las fotos servidas como archivo estático: un <img src> nunca manda el token.
-                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/uploads/**").permitAll()
+                        // Las fotos y vídeos ahora se sirven directamente desde S3, no desde este backend.
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/gatos", "/api/gatos/*").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/gatos/*/fotos").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/gatos/*/solicitudes").permitAll()

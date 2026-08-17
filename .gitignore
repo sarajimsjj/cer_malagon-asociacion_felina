@@ -3,7 +3,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-### Fotos subidas (contenido de usuario, no código) ###
+### Archivos de prueba de cuando las fotos se guardaban en disco local (ahora en S3) ###
 /uploads/
 
 ### IntelliJ IDEA ###

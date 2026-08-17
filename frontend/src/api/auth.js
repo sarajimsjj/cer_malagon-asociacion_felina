@@ -1,3 +1,5 @@
+import { API_BASE_URL } from './config'
+
 const CLAVE_TOKEN = 'cerMalagon.token'
 const CLAVE_USUARIO = 'cerMalagon.nombreUsuario'
 const CLAVE_ROL = 'cerMalagon.rol'
@@ -27,7 +29,7 @@ export function obtenerToken() {
 }
 
 export async function iniciarSesion(nombreUsuario, contrasena) {
-  const respuesta = await fetch('/api/auth/login', {
+  const respuesta = await fetch(`${API_BASE_URL}/api/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ nombreUsuario, contrasena }),
@@ -44,7 +46,7 @@ export async function iniciarSesion(nombreUsuario, contrasena) {
 }
 
 export async function crearAdministradora(nombreUsuario, contrasena) {
-  const respuesta = await fetch('/api/auth/administradoras', {
+  const respuesta = await fetch(`${API_BASE_URL}/api/auth/administradoras`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
