@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * Configuración CORS centralizada (sustituye a @CrossOrigin en los controladores).
  * En local se permite cualquier puerto de localhost porque Vite no siempre usa el 5173
  * (si está ocupado, prueba automáticamente con 5174, 5175...). En producción hay que
- * añadir el dominio real del frontend (ej. https://cer-malagon.vercel.app) a través de
+ * añadir el dominio real del frontend (ej. https://cer-malagon.netlify.app) a través de
  * la variable de entorno CORS_ALLOWED_ORIGINS (varios orígenes separados por comas).
  */
 @Configuration
