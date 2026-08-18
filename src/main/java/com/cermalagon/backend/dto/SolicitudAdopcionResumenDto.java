@@ -14,6 +14,7 @@ public record SolicitudAdopcionResumenDto(
         String telefono,
         String mensaje,
         EstadoSolicitud estado,
+        boolean vista,
         LocalDateTime fechaCreacion
 ) {
     public static SolicitudAdopcionResumenDto desde(SolicitudAdopcion solicitud) {
@@ -25,6 +26,7 @@ public record SolicitudAdopcionResumenDto(
                 solicitud.getTelefono(),
                 solicitud.getMensaje(),
                 solicitud.getEstado(),
+                solicitud.isVista(),
                 solicitud.getFechaCreacion()
         );
     }

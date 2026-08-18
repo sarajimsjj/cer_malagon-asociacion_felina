@@ -37,6 +37,13 @@ public class SolicitudAdopcion {
     @Column(nullable = false)
     private EstadoSolicitud estado = EstadoSolicitud.PENDIENTE;
 
+    // Se pone a true en cuanto una administradora abre la lista de solicitudes de este gato.
+    // Sirve para saber cuántas solicitudes nuevas mostrar como notificación en el navbar.
+    // columnDefinition con DEFAULT: con ddl-auto=update, la tabla ya tiene filas y un ALTER TABLE
+    // ADD COLUMN ... NOT NULL sin default fallaría contra esas filas existentes.
+    @Column(nullable = false, columnDefinition = "boolean not null default false")
+    private boolean vista = false;
+
     // Igual que en Gato: las rellena la base de datos (DEFAULT now() + trigger).
     @Column(name = "fecha_creacion", insertable = false, updatable = false)
     private LocalDateTime fechaCreacion;

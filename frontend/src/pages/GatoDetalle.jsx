@@ -84,7 +84,7 @@ export default function GatoDetalle() {
   return (
     <div className="pagina">
       <Link to="/" className="gato-detalle__volver">
-        ← Volver a todos los gatos
+        ← Volver a nuestros gatos
       </Link>
 
       <header className="gato-detalle__cabecera">

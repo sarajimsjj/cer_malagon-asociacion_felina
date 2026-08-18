@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
+import AvisoSolicitudes from './components/AvisoSolicitudes'
 import RutaProtegida from './components/RutaProtegida'
 import ListaGatos from './pages/ListaGatos'
 import Equipo from './pages/Equipo'
@@ -14,6 +15,7 @@ export default function App() {
   return (
     <>
       <Navbar />
+      <AvisoSolicitudes />
       <Routes>
         <Route path="/" element={<ListaGatos />} />
         <Route path="/equipo" element={<Equipo />} />

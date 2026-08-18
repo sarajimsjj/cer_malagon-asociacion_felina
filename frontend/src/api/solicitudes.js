@@ -31,6 +31,18 @@ export async function obtenerSolicitudes(gatoId) {
   return respuesta.json()
 }
 
+// Devuelve { total, gatos: [{ gatoId, nombreGato, cantidad }] } con las solicitudes
+// que ninguna administradora ha visto todavía, agrupadas por gato.
+export async function obtenerSolicitudesNoVistas() {
+  const respuesta = await fetch(`${API_BASE_URL}/api/solicitudes/no-vistas`, {
+    headers: { Authorization: `Bearer ${obtenerToken()}` },
+  })
+  if (!respuesta.ok) {
+    throw new Error(`Error al cargar las notificaciones (${respuesta.status})`)
+  }
+  return respuesta.json()
+}
+
 export async function cambiarEstadoSolicitud(gatoId, solicitudId, estado) {
   const respuesta = await fetch(`${API_BASE_URL}/api/gatos/${gatoId}/solicitudes/${solicitudId}/estado`, {
     method: 'PATCH',
