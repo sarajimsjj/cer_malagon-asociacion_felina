@@ -22,10 +22,11 @@ export default function FormasDeAyudar() {
 
       <div className="formas-ayudar__grid">
         <section className="formas-ayudar__tarjeta">
-          <h2 className="formas-ayudar__titulo">Hazte voluntaria</h2>
+          <h2 className="formas-ayudar__titulo">Dona material</h2>
           <p className="formas-ayudar__texto">
-            Si tienes tiempo y ganas, puedes ayudarnos en el día a día del refugio: cuidado de los gatos, limpieza,
-            socialización o apoyo en eventos.
+            ¿Tienes mantas, toallas, transportines, rascadores, muebles para gatos o incluso manualidades hechas por
+            ti? También aceptamos donaciones de material para el refugio. Contacta con nosotras y te contamos cómo
+            hacérnoslo llegar.
           </p>
           <a href={ENLACES.contacto} className="boton boton--secundario">
             Contactar

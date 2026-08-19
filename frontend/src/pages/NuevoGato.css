@@ -170,14 +170,12 @@
 }
 
 .boton--secundario {
-  background: var(--color-line);
+  background: var(--color-cer-orange);
   color: var(--color-ink);
-  border: 1px solid var(--color-line);
 }
 
 .boton--secundario:hover {
-  background: #c5cdc7;
-  border-color: #c5cdc7;
+  background: var(--color-cer-dark-orange);
 }
 
 @media (max-width: 560px) {
