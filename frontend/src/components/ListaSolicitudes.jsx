@@ -1,12 +1,18 @@
 import { useEffect, useState } from 'react'
 import { obtenerSolicitudes, cambiarEstadoSolicitud } from '../api/solicitudes'
 import { ESTADOS_SOLICITUD } from '../constants'
+import ComentariosSolicitud from './ComentariosSolicitud'
 import './ListaSolicitudes.css'
 
 export default function ListaSolicitudes({ gatoId }) {
   const [solicitudes, setSolicitudes] = useState([])
   const [estado, setEstado] = useState('cargando') // 'cargando' | 'listo' | 'error'
   const [errorPorSolicitud, setErrorPorSolicitud] = useState({})
+  const [comentariosAbiertos, setComentariosAbiertos] = useState({})
+
+  function alternarComentarios(solicitudId) {
+    setComentariosAbiertos((anteriores) => ({ ...anteriores, [solicitudId]: !anteriores[solicitudId] }))
+  }
 
   useEffect(() => {
     obtenerSolicitudes(gatoId)
@@ -63,34 +69,51 @@ export default function ListaSolicitudes({ gatoId }) {
             {solicitud.mensaje && <p className="solicitud__mensaje">{solicitud.mensaje}</p>}
 
             <div className="solicitud__acciones">
+              {solicitud.estado !== 'ACEPTADA' && (
+                <button
+                  type="button"
+                  className="boton boton--secundario"
+                  onClick={() => manejarCambioEstado(solicitud.id, 'ACEPTADA')}
+                >
+                  Aceptar
+                </button>
+              )}
+              {solicitud.estado !== 'RECHAZADA' && (
+                <button
+                  type="button"
+                  className="boton boton--secundario"
+                  onClick={() => manejarCambioEstado(solicitud.id, 'RECHAZADA')}
+                >
+                  Rechazar
+                </button>
+              )}
+              {solicitud.estado !== 'PENDIENTE' && (
+                <button
+                  type="button"
+                  className="boton boton--secundario"
+                  onClick={() => manejarCambioEstado(solicitud.id, 'PENDIENTE')}
+                >
+                  Marcar pendiente
+                </button>
+              )}
+              <span className="solicitud__divisor" aria-hidden="true" />
               <button
                 type="button"
                 className="boton boton--secundario"
-                disabled={solicitud.estado === 'ACEPTADA'}
-                onClick={() => manejarCambioEstado(solicitud.id, 'ACEPTADA')}
+                onClick={() => alternarComentarios(solicitud.id)}
               >
-                Aceptar
-              </button>
-              <button
-                type="button"
-                className="boton boton--secundario"
-                disabled={solicitud.estado === 'RECHAZADA'}
-                onClick={() => manejarCambioEstado(solicitud.id, 'RECHAZADA')}
-              >
-                Rechazar
-              </button>
-              <button
-                type="button"
-                className="boton boton--secundario"
-                disabled={solicitud.estado === 'PENDIENTE'}
-                onClick={() => manejarCambioEstado(solicitud.id, 'PENDIENTE')}
-              >
-                Marcar pendiente
+                {comentariosAbiertos[solicitud.id] ? 'Ocultar comentarios' : 'Ver comentarios'}
               </button>
             </div>
 
             {errorPorSolicitud[solicitud.id] && (
               <p className="formulario__error">{errorPorSolicitud[solicitud.id]}</p>
+            )}
+
+            
+
+            {comentariosAbiertos[solicitud.id] && (
+              <ComentariosSolicitud gatoId={gatoId} solicitudId={solicitud.id} />
             )}
           </li>
         )

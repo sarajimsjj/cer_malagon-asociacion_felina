@@ -66,6 +66,7 @@
 
 .solicitud__acciones {
   display: flex;
+  align-items: center;
   gap: 10px;
   margin-top: 6px;
   flex-wrap: wrap;
@@ -74,4 +75,10 @@
 .solicitud__acciones .boton {
   padding: 6px 14px;
   font-size: 13px;
+}
+
+.solicitud__divisor {
+  align-self: stretch;
+  width: 1px;
+  background: var(--color-ink-soft);
 }
