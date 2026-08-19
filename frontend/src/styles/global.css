@@ -7,6 +7,7 @@
   --color-line: #d1d5d2;
   --color-amber: #d9a441;
   --color-navbar: #fdcdb0;
+  --color-huella: #f0973f;
 
   --color-disponible: #3f7d5c;
   --color-disponible-bg: #d5f0e1;
@@ -42,10 +43,37 @@ body {
 }
 
 body {
+  position: relative;
   background: var(--color-bg);
   color: var(--color-ink);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
+}
+
+/* Huellas de fondo, muy sutiles: van detrás de todo (z-index negativo) y no
+   interfieren con clics ni con el contraste del texto. La huella se usa como
+   máscara (no como imagen directa) para poder pintarla de naranja en vez del
+   negro original del PNG; el propio PNG ya trae la huella inclinada, así que
+   la rejilla de repetición no necesita girarse. */
+body::before {
+  content: '';
+  position: fixed;
+  /* Empieza justo debajo del navbar (altura real medida en Navbar.jsx) para que
+     la primera fila de huellas no quede con un hueco grande respecto al menú. */
+  top: var(--navbar-h, 73px);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-huella);
+  -webkit-mask-image: url('/huella.png?v=2');
+  mask-image: url('/huella.png?v=2');
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+  -webkit-mask-size: 110px 110px;
+  mask-size: 110px 110px;
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: -1;
 }
 
 button {

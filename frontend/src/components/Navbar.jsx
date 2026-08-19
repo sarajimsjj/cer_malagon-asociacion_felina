@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import './Navbar.css'
@@ -15,6 +15,24 @@ export default function Navbar() {
   const { estaAutenticada, esPrincipal, nombreUsuario, cerrarSesion } = useAuth()
   const navigate = useNavigate()
   const [menuAbierto, setMenuAbierto] = useState(false)
+  const navRef = useRef(null)
+
+  // El fondo de huellas (ver global.css) arranca justo debajo del navbar en vez
+  // de por debajo de toda la pantalla, así que necesita saber su altura real:
+  // cambia con el ancho de pantalla y con el menú hamburguesa abierto/cerrado.
+  useEffect(() => {
+    const nodo = navRef.current
+    if (!nodo) return
+
+    function actualizarAltura() {
+      document.documentElement.style.setProperty('--navbar-h', `${nodo.getBoundingClientRect().height}px`)
+    }
+
+    actualizarAltura()
+    const observador = new ResizeObserver(actualizarAltura)
+    observador.observe(nodo)
+    return () => observador.disconnect()
+  }, [])
 
   function cerrarMenu() {
     setMenuAbierto(false)
@@ -27,10 +45,13 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="navbar">
+    <nav className="navbar" ref={navRef}>
       <div className="navbar__contenido">
         <Link to="/" className="navbar__marca" onClick={cerrarMenu}>
-          Cer Malagón <span className="navbar__marca-sub">asociación</span>
+          <img src="/logo.png" alt="" className="navbar__logo" />
+          CER
+          <span className="navbar__marca-malagon">Malagón</span>
+          <span className="navbar__marca-sub">asociación felina</span>
         </Link>
 
         <button
