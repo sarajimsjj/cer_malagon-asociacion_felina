@@ -28,10 +28,12 @@ public class GatoFoto {
     @Column(name = "es_principal", nullable = false)
     private boolean esPrincipal = false;
 
-    // columnDefinition con DEFAULT para que, si la columna ya existe (fotos subidas antes
-    // de admitir vídeo), Postgres pueda rellenarla sin fallar el ALTER TABLE.
+    // La columna ya existe en BD con su DEFAULT puesto (de cuando se migraron las fotos
+    // subidas antes de admitir vídeo). No repetimos aquí "default 'FOTO'": Postgres no admite
+    // combinar tipo y DEFAULT en el mismo ALTER COLUMN ... SET DATA TYPE, y con ddl-auto=update
+    // Hibernate reintenta ese ALTER (inválido) en cada arranque si columnDefinition lo incluye.
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipo", nullable = false, columnDefinition = "varchar(10) default 'FOTO'")
+    @Column(name = "tipo", nullable = false, columnDefinition = "varchar(10)")
     private TipoMedia tipo = TipoMedia.FOTO;
 
     @Column(name = "fecha_creacion", insertable = false, updatable = false)
