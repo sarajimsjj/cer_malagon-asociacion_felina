@@ -74,6 +74,9 @@ export default function Navbar() {
             <NavLink to="/equipo" className={claseEnlace} onClick={cerrarMenu}>
               Nuestro equipo
             </NavLink>
+            <NavLink to="/formas-de-ayudar" className={claseEnlace} onClick={cerrarMenu}>
+              Formas de ayudar
+            </NavLink>
 
             {esPrincipal && (
               <>

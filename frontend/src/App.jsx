@@ -4,6 +4,7 @@ import AvisoSolicitudes from './components/AvisoSolicitudes'
 import RutaProtegida from './components/RutaProtegida'
 import ListaGatos from './pages/ListaGatos'
 import Equipo from './pages/Equipo'
+import FormasDeAyudar from './pages/FormasDeAyudar'
 import NuevoGato from './pages/NuevoGato'
 import GatoDetalle from './pages/GatoDetalle'
 import EditarGato from './pages/EditarGato'
@@ -19,6 +20,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<ListaGatos />} />
         <Route path="/equipo" element={<Equipo />} />
+        <Route path="/formas-de-ayudar" element={<FormasDeAyudar />} />
         <Route path="/login" element={<Login />} />
         <Route
           path="/gatos/nuevo"
